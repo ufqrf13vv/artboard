@@ -1,0 +1,67 @@
+{
+  "products": [
+    {
+      "name": "Товар №1",
+      "price": "1200",
+      "src": "assets\\img\\products\\Work1.jpg"
+    },
+    {
+      "name": "Товар №2",
+      "price": "1900",
+      "src": "assets\\img\\products\\Work2.jpg"
+    },
+    {
+      "name": "Товар №3",
+      "price": "1250",
+      "src": "assets\\img\\products\\Work3.jpg"
+    },
+    {
+      "name": "Товар №4",
+      "price": "1762",
+      "src": "assets\\img\\products\\Work4.jpg"
+    },
+    {
+      "name": "Товар №5",
+      "price": "1823",
+      "src": "assets\\img\\products\\Work5.jpg"
+    },
+    {
+      "name": "Товар №6",
+      "price": "1982",
+      "src": "assets\\img\\products\\Work6.jpg"
+    },
+    {
+      "name": "Товар №7",
+      "price": "1980",
+      "src": "assets\\img\\products\\Work7.jpg"
+    },
+    {
+      "name": "Товар №8",
+      "price": "1220",
+      "src": "assets\\img\\products\\Work8.jpg"
+    },
+    {
+      "name": "Товар №9",
+      "price": "1090",
+      "src": "assets\\img\\products\\Work9.jpg"
+    }
+  ],
+  "skills": [
+    {
+      "number": "4",
+      "text": "Возраст начала занятий на скрипке"
+    },
+    {
+      "number": "10",
+      "text": "Концертов отыграл"
+    },
+    {
+      "number": "20",
+      "text": "Максимальное число городов в туре"
+    },
+    {
+      "number": "21",
+      "text": "Лет на сцене в качестве скрипача"
+    }
+  ]
+}

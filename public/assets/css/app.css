@@ -317,7 +317,7 @@ body {
 .form-email {
   margin: 0 auto;
   width: 65%;
-  margin-bottom: 75px; }
+  padding-bottom: 75px; }
 
 .form-email__line {
   display: -webkit-box;

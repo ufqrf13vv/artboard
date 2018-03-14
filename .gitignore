@@ -21,7 +21,6 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
-.idea/
 
 # Dependency directory
 # https://docs.npmjs.com/cli/shrinkwrap#caveats
@@ -29,3 +28,10 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+
+# PHPStorm
+.idea/
+.idea/workspace.xml
+
+# Email authentification
+config.json

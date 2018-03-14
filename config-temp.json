@@ -1,0 +1,17 @@
+{
+    "mail": {
+        "subject": "Сообщение с сайта",
+        "smtp": {
+            "host": "smtp.mail.ru",
+            "port": 465,
+            "secure": true,
+            "auth": {
+                "user": "email address",
+                "pass": "email password"
+            },
+            "tls": {
+                "rejectUnauthorized": false
+            }
+        }
+    }
+}
