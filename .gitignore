@@ -30,7 +30,7 @@ node_modules
 npm-debug.log
 
 # PHPStorm
-.idea/
+.idea
 .idea/workspace.xml
 
 # Email authentification
