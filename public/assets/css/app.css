@@ -176,7 +176,6 @@ body {
 .about__note-family {
   color: #cc9b18;
   font-size: 14px;
-  /* Приближение из-за подстановки шрифтов */
   font-weight: 700; }
 
 .about__note-field {

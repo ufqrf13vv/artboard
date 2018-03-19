@@ -31,7 +31,6 @@ npm-debug.log
 
 # PHPStorm
 .idea
-.idea/workspace.xml
 
 # Email authentification
 config.json

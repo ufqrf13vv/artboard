@@ -1,11 +1,13 @@
-exports.index = (req, res) => {
-    res.render('pages/login');
+const pug = require('./controller');
+
+exports.index = ctx => {
+    ctx.body = pug.render('login');
 };
 
-exports.autorization = (req, res) => {
-    if (req.body.email === 'mail@mail.ru' && req.body.password === '0129') {
-        res.redirect('/admin');
+exports.autorization = ctx => {
+    if (ctx.request.body.email === 'mail@mail.ru' && ctx.request.body.password === '0129') {
+        ctx.redirect('admin')
     }
 
-    res.render('pages/login', { msgslogin: 'Неверное имя пользователя или пароль!'});
+    ctx.body = pug.render('login', { msglogin: 'Неверное имя пользователя или пароль!'});
 };

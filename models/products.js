@@ -7,7 +7,7 @@ exports.create = (name, price, path) => {
             })
             .write();
     }
-
+    
     db.get('products')
         .push({
             name: name,

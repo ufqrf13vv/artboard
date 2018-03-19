@@ -1,75 +1,73 @@
-const formidable = require('formidable');
+const pug = require('./controller');
 const fs = require('fs');
 const path = require('path');
 //  Модели
 const Products = require('../models/products');
 const Skills = require('../models/skills');
 
-exports.index = (req, res) => {
-    res.render('pages/admin');
+exports.index = ctx => {
+    ctx.body = pug.render('admin');
 };
 
-exports.upload = (req, res, next) => {
-    let form = new formidable.IncomingForm();
+exports.upload = async ctx => {
+    let { name, price } = ctx.request.body.fields;
+    let photo = ctx.request.body.files.photo;
     let products = path.join('public', 'assets', 'img', 'products');
     let fileName = '';
 
     if (!fs.existsSync(products)) {
         fs.mkdir(products);
     }
+    //  Изображение товара
+    if (!photo.size) {
+        return ctx.body = pug.render('admin', {msgfile: 'Вы не выбрали изображение товара!'});
+    }
+    //  Название товара
+    if (!name) {
+        fs.unlinkSync(photo.path);
 
-    form.uploadDir = path.join(process.cwd(), products);
+        return ctx.body = pug.render('admin', {msgfile: 'Введите название товара!'});
+    }
+    //  Цена товара
+    if (!price) {
+        fs.unlinkSync(photo.path);
 
-    form.parse(req, (err, fields, files) => {
-        if (err) return next(err);
-        //  Изображение товара
-        if (!files.photo.name || !files.photo.size) {
-            return res.render('pages/admin', {msgfile: 'Вы не выбрали изображение товара!'});
+        return ctx.body = pug.render('admin', {msgfile: 'Введите цену товара!'});
+    }
+
+    fileName = path.join(products, photo.name);
+
+    await fs.rename(photo.path, fileName, err => {
+        if (err) {
+            console.error(err);
         }
-        //  Название товара
-        if (!fields.name) {
-            fs.unlink(files.photo.path);
 
-            return res.render('pages/admin', {msgfile: 'Введите название товара!'});
-        }
-        //  Цена товара
-        if (!fields.price) {
-            fs.unlink(files.photo.path);
+        let startPos = fileName.indexOf('assets');
+        let filePath = fileName.substr(startPos);
 
-            return res.render('pages/admin', {msgfile: 'Введите цену товара!'});
-        }
+        Products.create(name, price, filePath);
 
-        fileName = path.join(products, files.photo.name);
-
-        fs.rename(files.photo.path, fileName, err => {
-            if (err) return next(err);
-
-            let startPos = fileName.indexOf('assets');
-            let filePath = fileName.substr(startPos);
-
-            Products.create(fields.name, fields.price, filePath);
-
-            res.redirect('/admin');
-        });
-    })
+        ctx.body = pug.render('admin', {msgfile: 'Товар успешно добавлен!'});
+    });
 };
 
-exports.skills = (req, res) => {
-    let {age, concerts, cities, years} = req.body;
+exports.skills = ctx => {
+    let {age, concerts, cities, years} = ctx.request.body;
 
     if (!age || !concerts || !cities || !years) {
-        return res.render('pages/admin', {msgskill: 'Заполните все поля!'});
+        return ctx.body = pug.render('admin', {msgskill: 'Заполните все поля!'});
     }
 
     let receivedSkills = Skills.get();
     let counter = 0;
     //  Изменение данных
-    for (let key in req.body) {
-        if (receivedSkills[counter].number != req.body[key]) {
-            Skills.update(receivedSkills[counter].number, req.body[key])
+    for (let key in ctx.request.body) {
+        if (receivedSkills[counter].number != ctx.request.body[key]) {
+            Skills.update(receivedSkills[counter].number, ctx.request.body[key])
         }
         counter++;
     }
 
-    res.render('pages/admin', {msgskill: 'Данные успешно сохранены'});
+    ctx.body = pug.render('admin', {msgskill: 'Данные успешно сохранены'});
 };
+

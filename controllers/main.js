@@ -1,17 +1,18 @@
+const pug = require('./controller');
 const nodemailer = require('nodemailer');
 const config = require('../config.json');
 const products = require('../db.json').products;
 const skills = require('../db.json').skills;
 
-exports.index = (req, res) => {
-    res.render('pages/index', {products, skills});
+exports.index = ctx => {
+    ctx.body = pug.render('index', { products, skills });
 };
 
-exports.email = (req, res) => {
-    let {name, email, message} = req.body;
+exports.email = async ctx => {
+    let {name, email, message} = ctx.request.body;
     // все поля должны быть заполнены
     if (!name || !email || !message) {
-        return res.json({msg: 'Все поля нужно заполнить!', status: 'Error'});
+        ctx.body = pug.render('index', {msgemail: 'Заполните пожалуйста все поля!', products, skills});
     }
     //инициализируем модуль для отправки писем и указываем данные из конфига
     const transporter = nodemailer.createTransport(config.mail.smtp);
@@ -19,15 +20,14 @@ exports.email = (req, res) => {
         from: `"${name}" <${config.mail.smtp.auth.user}>`,
         to: config.mail.smtp.auth.user,
         subject: config.mail.subject,
-        text: `Отправлено с: <${email}>`
+        text: `${message}\nОтправлено с: <${email}>`
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return res.json({msgemail: `При отправке письма произошла ошибка!: ${error}`, status: 'Error'});
+            ctx.body = pug.render('index', {msgemail: `При отправке письма произошла ошибка!: ${error}`, products, skills});
         }
-
-        res.render('pages/index', {msgemail: 'Письмо успешно отправлено!', products, skills});
+        ctx.body = pug.render('index', {msgemail: 'Письмо успешно отправлено!', products, skills});
     });
 
     transporter.close();

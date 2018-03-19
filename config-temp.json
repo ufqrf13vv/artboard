@@ -1,6 +1,6 @@
 {
     "mail": {
-        "subject": "Сообщение с сайта",
+        "subject": "Сообщение с сайта 'Архипов'",
         "smtp": {
             "host": "smtp.mail.ru",
             "port": 465,
