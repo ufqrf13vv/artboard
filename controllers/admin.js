@@ -46,9 +46,9 @@ exports.upload = async ctx => {
         let filePath = fileName.substr(startPos);
 
         Products.create(name, price, filePath);
-
-        ctx.body = pug.render('admin', {msgfile: 'Товар успешно добавлен!'});
     });
+
+    return ctx.redirect('/admin', { msgfile: 'Товар добавлен в каталог!'});
 };
 
 exports.skills = ctx => {
@@ -68,6 +68,6 @@ exports.skills = ctx => {
         counter++;
     }
 
-    ctx.body = pug.render('admin', {msgskill: 'Данные успешно сохранены'});
+    return ctx.redirect('/admin', {msgskill: 'Данные успешно сохранены'});
 };
 
